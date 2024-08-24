@@ -1,0 +1,30 @@
+version: '3.5'
+services:
+  web:
+    image: nginx:1.26-bookworm-perl
+    ports:
+    - "80:80"
+    - "443:443"
+    restart: always
+    volumes:
+    - ./nginx/conf/:/etc/nginx/conf.d/:ro
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+networks:
+  default:
+    name: network-web
+    external: false
+    ipam:
+      config:
+      - subnet: 172.30.254.0/16
+
+# guia
+# https://mindsers.blog/post/https-using-nginx-certbot-docker/
+# test
+# docker-compose run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ -d mydomain.com --dry-run
+# oficial
+# docker-compose run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ -d mydomain.com
+# docker-compose run --rm certbot renew
