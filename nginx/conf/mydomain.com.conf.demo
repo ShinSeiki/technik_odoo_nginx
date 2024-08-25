@@ -1,10 +1,10 @@
 # Odoo Upstreams
 upstream intranet.com {
-    server 127.0.0.1:8069;
+    server 192.168.231.101:8069;
 }
 
 upstream intranet-chat.com {
-    server 127.0.0.1:8072;
+    server 192.168.231.101:8072;
 }
 
 # http to https redirection
